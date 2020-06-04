@@ -20,7 +20,7 @@ class HashTable:
     Implement this.
     """
 
-    key_value_pairs = 0
+    key_value_pair_counts = 0
 
     def __init__(self, capacity):
         self.capacity = capacity
@@ -48,7 +48,7 @@ class HashTable:
         Implement this.
         """
         # return load factor
-        return HashTable.key_value_pairs / self.get_num_slots()
+        return HashTable.key_value_pair_counts / self.get_num_slots()
 
 
     def djb2(self, key):
@@ -84,7 +84,7 @@ class HashTable:
         Implement this.
         """
         # increment # of pairs in table
-        HashTable.key_value_pairs += 1
+        HashTable.key_value_pair_counts += 1
 
         # mod hash with length of array
         index = self.hash_index(key)
@@ -149,7 +149,8 @@ class HashTable:
                 # if the node's key matches input key
                 if current_node.key == key:
 
-                    HashTable.key_value_pairs -= 1
+                    # remove a pair from our k/v pair counter
+                    HashTable.key_value_pair_counts -= 1
 
                     # if there is a previous node 
                     if last_node:
@@ -237,29 +238,6 @@ class HashTable:
 if __name__ == "__main__":
     ht = HashTable(8)
 
-    ht.put("key-0", "val-0")
-    ht.put("key-1", "val-1")
-    ht.put("key-2", "val-2")
-    ht.put("key-3", "val-3")
-    ht.put("key-4", "val-4")
-    ht.put("key-5", "val-5")
-    ht.put("key-6", "val-6")
-    ht.put("key-7", "val-7")
-    ht.put("key-8", "val-8")
-    ht.put("key-9", "val-9")
-    ht.delete("key-7")
-    ht.delete("key-6")
-    ht.delete("key-5")
-    ht.delete("key-4")
-    ht.delete("key-3")
-    ht.delete("key-2")
-    ht.delete("key-1")
-    ht.delete("key-0")
-    return_value = ht.get("key-0")
-    print("Get value (should be none):", return_value)
-
-    print(ht.djb2("line_1"))
-    print(ht.hash_index('line_1'))
     ht.put("line_1", "'Twas brillig, and the slithy toves")
     ht.put("line_2", "Did gyre and gimble in the wabe:")
     ht.put("line_3", "All mimsy were the borogoves,")
@@ -272,10 +250,8 @@ if __name__ == "__main__":
     ht.put("line_10", "Long time the manxome foe he sought--")
     ht.put("line_11", "So rested he by the Tumtum tree")
     ht.put("line_12", "And stood awhile in thought.")
-    print("Get", ht.get("line_1"))
-    print("Delete", ht.delete("line_5"))
+
     print("")
-    print("Load factor:", ht.get_load_factor())
 
     # Test storing beyond capacity
     for i in range(1, 13):
@@ -293,4 +269,3 @@ if __name__ == "__main__":
         print(ht.get(f"line_{i}"))
 
     print("")
-

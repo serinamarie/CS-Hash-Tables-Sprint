@@ -35,7 +35,6 @@ O(1)
     get_hash = UTF8_Hash(key1)
     idx3 = get_hash % len(my_arr2)
     print(my_arr2[idx3])
-<<<<<<< HEAD
 
 
 ## Collision Resolution
@@ -58,6 +57,3 @@ Chaining (also called closed addressing)
 - Pros:
     - Quicker lookup
     - If load factor is high this might be better
-=======
-```    
->>>>>>> 1c3169705440df03005f1452e9e501bb6599988c

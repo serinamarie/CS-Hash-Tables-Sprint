@@ -35,7 +35,7 @@ O(1)
     get_hash = UTF8_Hash(key1)
     idx3 = get_hash % len(my_arr2)
     print(my_arr2[idx3])
-
+```
 
 ## Collision Resolution
 Open addressing 

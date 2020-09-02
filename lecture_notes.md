@@ -17,7 +17,7 @@ Time complexity?
 - Constant time in length of array <------ This is important part
 O(1)
 
-
+```
     #Collision
     key1='dad'
     key2='add'
@@ -35,3 +35,4 @@ O(1)
     get_hash = UTF8_Hash(key1)
     idx3 = get_hash % len(my_arr2)
     print(my_arr2[idx3])
+```    

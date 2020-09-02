@@ -38,6 +38,7 @@ O(1)
 ```
 
 ## Collision Resolution
+```
 Open addressing 
 
     - Linear probing: if index is unavailable, go to next available empty index
@@ -55,7 +56,8 @@ Open addressing
 - Pros of open addressing:
 
     - If load factor is low, better to use open addressing
-
+```
+```
 Closed addressing
 
 Chaining (also called closed addressing)
@@ -69,3 +71,4 @@ Chaining (also called closed addressing)
     - Quicker lookup
 
     - If load factor is high this might be better
+```

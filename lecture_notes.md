@@ -72,3 +72,23 @@ Chaining (also called closed addressing)
 
     - If load factor is high this might be better
 ```
+
+1. set a constant hash = 5381
+2. for letter in string
+3. hash = g* hash + s.char(letter)
+2. return hash
+
+def djb2(s):
+    hash = 5381
+    byte_array = s.encode('utf-8')
+    for byte in byte_array:
+        hash = (hash * 33) + byte
+
+
+hash = (hash*33) + byte
+oooor xor
+hash = hash(byte-1) * 33^byte
+
+hash(i) = hash(i - 1) * 33 ^ str[i]
+
+

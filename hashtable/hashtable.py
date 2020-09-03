@@ -20,8 +20,11 @@ class HashTable:
     Implement this.
     """
 
+    key_value_pairs = 0
+
     def __init__(self, capacity):
-        # Your code here
+        self.capacity = capacity
+        self.array_buckets = [None for i in range(capacity)]
 
 
     def get_num_slots(self):
@@ -34,7 +37,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        # return the length of the array
+        return len(self.array_buckets)
 
 
     def get_load_factor(self):
@@ -43,17 +47,8 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
-
-
-    def fnv1(self, key):
-        """
-        FNV-1 Hash, 64-bit
-
-        Implement this, and/or DJB2.
-        """
-
-        # Your code here
+        # return load factor
+        return key_value_pairs / self.array_buckets
 
 
     def djb2(self, key):
@@ -62,7 +57,17 @@ class HashTable:
 
         Implement this, and/or FNV-1.
         """
-        # Your code here
+
+        hash = 5381
+
+        byte_array = key.encode('utf-8')
+
+        for byte in byte_array:
+
+            hash = (hash * 33) + byte
+
+        return hash
+        
 
 
     def hash_index(self, key):
@@ -73,7 +78,10 @@ class HashTable:
         #return self.fnv1(key) % self.capacity
         return self.djb2(key) % self.capacity
 
+
     def put(self, key, value):
+
+        
         """
         Store the value with the given key.
 
@@ -81,10 +89,76 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+
+        
+        # hash the key 
+        hash_1 = self.djb2(key)
+
+        # mod hash with length of array
+        index = hash_1 % self.capacity
+
+        # locate the node index
+        current_node = self.array_buckets[index]
+
+        # if there is nothing at that index
+        if current_node is None:
+
+            # add a new entry
+            current_node = HashTableEntry(key=key, value=value)
+
+        # if there is a key/value at that index
+        elif current_node:
+
+            # while there is a key/value at that index
+            while current_node: 
+
+                # set the current node to the last known node
+                last_node = current_node
+
+                # make the next node the current node
+                current_node = current_node.next
+            
+            # once there isn't a current node
+            # replace the None with the key/value pair
+            current_node = HashTableEntry(key=key, value=value)
+
+            # set a pointer from the last known node to the new one created
+            last_node.next = current_node
+
+            # last_node = None
+
+            # # while we have a node 
+            # while current_node:
+
+            #     # if the current node key is equal to the input key
+            #     if current_node.key == key:
+
+            #         # replace the value
+            #         current_node.value = value
+      
+            #         # if we have a last node (should have a last node unless our node is equal to our input key right away?)
+            #         if last_node:
+
+            #             # set the current node to be after the last node
+            #             last_node.next = current_node
+
+            #     # if the current node key is not equal to the input key
+            #     else:
+
+            #         # set the current node to the last known node
+            #         last_node = current_node
+
+            #         # make the next node the current node
+            #         current_node = current_node.next
 
 
-    def delete(self, key):
+
+
+
+        # increment the number of pairs
+        # key_value_pairs += 1
+
+def delete(self, key):
         """
         Remove the value stored with the given key.
 
@@ -92,7 +166,118 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        # hash the key 
+        hash_1 = self.djb2(key)
+
+        # mod hash with length of array
+        index = hash1 % self.capacity
+
+        # locate the index
+        current_node = self.array_buckets[index]
+
+        # if there is nothing at that index
+        if current_node is None:
+
+            # no key found
+            print(f"KeyError: '{key}' not found in hash table")
+
+        # if there is a node at that index
+        else:
+
+            # set the latest node to none (will make sense later in the function)
+            last_node = None
+
+            # while a key/value pair exists and that pair is not our input pair
+            while current_node and current_key != key:
+
+                # go to the next key
+                last_node = current_node
+                current_node = current_node.next
+
+            if current_node.key != key:
+  
+                # no key found
+                print(f"KeyError: '{key}' not found in hash table")
+
+            # if it is the right key
+            elif current_node.key == key:
+
+                # if there is a previous node 
+                if last_node:
+                    
+                    # set the current node's 'next' equal to our last node's 'next'
+                    last_node.next = current_node.next
+
+                # if there isn't a previous node (this is the first node)
+                else:
+
+                    # the next node is the first node
+                    self.array_buckets[index] = current_node.next
+
+        # decrement the number of pairs
+        # key_value_pairs -= 1
+
+
+
+    def delete2(self, key):
+        """
+        Remove the value stored with the given key.
+
+        Print a warning if the key is not found.
+
+        Implement this.
+        """
+        # hash the key 
+        hash_1 = self.djb2(key)
+
+        # mod hash with length of array
+        index = hash1 % self.capacity
+
+        # locate the index
+        current_node = self.array_buckets[index]
+
+        # if there is nothing at that index
+        if current_node is None:
+
+            # no key found
+            print(f"KeyError: '{key}' not found in hash table")
+
+        # if there is a node at that index
+        else:
+
+            # set the latest node to none (will make sense later in the function)
+            last_node = None
+
+            # while there is a key/value pair
+            while current_node:
+
+                # if it is the right key
+                if current_node.key == key:
+
+                    # if there is a previous node 
+                    if last_node:
+                        
+                        # set the current node's 'next' equal to our last node's 'next'
+                        last_node.next = current_node.next
+
+                    # if there isn't a previous node (this is the first node)
+                    else:
+
+                        # the next node is the first node
+                        self.array_buckets[index] = current_node.next
+        
+                # if it doesn't have the right key
+                else:
+
+                    # go to the next key
+                    last_node = current_node
+                    current_node = current_node.next
+
+            # once there is no current node
+            # if last_node.key == key:
+
+        # decrement the number of pairs
+        # key_value_pairs -= 1
 
 
     def get(self, key):
@@ -103,7 +288,44 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        # hash the key 
+        hash_1 = self.djb2(key)
+
+        # mod hash with length of array
+        index = hash_1 % self.capacity
+
+        # locate the node index
+        current_node = self.array_buckets[index]
+
+        # if there is nothing at that index
+        if current_node is None:
+
+            # return error
+            return None
+
+        # if there is a key/value at that index
+        else:
+
+            # while there is a key/value at that index
+            while current_node: 
+
+                if current_node.key == key:
+
+                    return current_node.value
+                
+                # if this node's key isn't the right key
+                else:
+
+                    # set the current node to the last known node
+                    last_node = current_node
+
+                    # make the next node the current node
+                    current_node = current_node.next
+
+     
+
+        # decrement the number of pairs
+        # key_value_pairs -= 1
 
 
     def resize(self, new_capacity):
@@ -119,7 +341,8 @@ class HashTable:
 
 if __name__ == "__main__":
     ht = HashTable(8)
-
+    print(ht.djb2("line_1"))
+    print(ht.hash_index('line_1'))
     ht.put("line_1", "'Twas brillig, and the slithy toves")
     ht.put("line_2", "Did gyre and gimble in the wabe:")
     ht.put("line_3", "All mimsy were the borogoves,")
@@ -133,21 +356,22 @@ if __name__ == "__main__":
     ht.put("line_11", "So rested he by the Tumtum tree")
     ht.put("line_12", "And stood awhile in thought.")
 
-    print("")
+print(ht.get("line_1"))
+    # print("")
 
-    # Test storing beyond capacity
-    for i in range(1, 13):
-        print(ht.get(f"line_{i}"))
+    # # Test storing beyond capacity
+    # for i in range(1, 13):
+    #     print(ht.get(f"line_{i}"))
 
-    # Test resizing
-    old_capacity = ht.get_num_slots()
-    ht.resize(ht.capacity * 2)
-    new_capacity = ht.get_num_slots()
+    # # Test resizing
+    # old_capacity = ht.get_num_slots()
+    # ht.resize(ht.capacity * 2)
+    # new_capacity = ht.get_num_slots()
 
-    print(f"\nResized from {old_capacity} to {new_capacity}.\n")
+    # print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
-    # Test if data intact after resizing
-    for i in range(1, 13):
-        print(ht.get(f"line_{i}"))
+    # # Test if data intact after resizing
+    # for i in range(1, 13):
+    #     print(ht.get(f"line_{i}"))
 
-    print("")
+    # print("")

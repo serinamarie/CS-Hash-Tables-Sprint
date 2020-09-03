@@ -48,7 +48,7 @@ class HashTable:
         Implement this.
         """
         # return load factor
-        return HashTable.key_value_pairs / self.array_buckets
+        return HashTable.key_value_pairs / self.get_num_slots()
 
 
     def djb2(self, key):
@@ -149,6 +149,8 @@ class HashTable:
                 # if the node's key matches input key
                 if current_node.key == key:
 
+                    HashTable.key_value_pairs -= 1
+
                     # if there is a previous node 
                     if last_node:
 
@@ -170,6 +172,7 @@ class HashTable:
 
             # no key found
             print(f"IndexError: There are no keys at that index")
+
 
 
     def get(self, key):
@@ -222,7 +225,12 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+
+        if self.get_load_factor() >= 0.7:
+            self.capacity = new_capacity
+            self.array_buckets = [None for i in range(new_capacity)]
+
+            # rehash key value pairs
 
 
 
@@ -267,6 +275,7 @@ if __name__ == "__main__":
     print("Get", ht.get("line_1"))
     print("Delete", ht.delete("line_5"))
     print("")
+    print("Load factor:", ht.get_load_factor())
 
     # Test storing beyond capacity
     for i in range(1, 13):
@@ -284,3 +293,4 @@ if __name__ == "__main__":
         print(ht.get(f"line_{i}"))
 
     print("")
+

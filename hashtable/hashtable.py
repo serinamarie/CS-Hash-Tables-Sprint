@@ -69,7 +69,6 @@ class HashTable:
         return hash
         
 
-
     def hash_index(self, key):
         """
         Take an arbitrary key and return a valid integer index
@@ -80,22 +79,16 @@ class HashTable:
 
 
     def put(self, key, value):
-
-        
         """
         Store the value with the given key.
-
         Hash collisions should be handled with Linked List Chaining.
-
         Implement this.
         """
-
-        
-        # hash the key 
-        hash_1 = self.djb2(key)
+        # # hash the key 
+        # hash_1 = self.djb2(key)
 
         # mod hash with length of array
-        index = hash_1 % self.capacity
+        index = self.hash_index(key)
 
         # locate the node index
         current_node = self.array_buckets[index]
@@ -104,26 +97,34 @@ class HashTable:
         if current_node is None:
 
             # add a new entry
-            current_node = HashTableEntry(key=key, value=value)
+            self.array_buckets[index] = HashTableEntry(key=key, value=value)
 
         # if there is a key/value at that index
-        elif current_node:
+        else:
 
             # while there is a key/value at that index
-            while current_node: 
+            while current_node and current_node.key != key: 
 
                 # set the current node to the last known node
                 last_node = current_node
 
                 # make the next node the current node
                 current_node = current_node.next
-            
-            # once there isn't a current node
-            # replace the None with the key/value pair
-            current_node = HashTableEntry(key=key, value=value)
 
-            # set a pointer from the last known node to the new one created
-            last_node.next = current_node
+            # if input key does not match an existing key
+            if not current_node: 
+            
+                # once there isn't a current node
+                # set a pointer from the last known node to the new one created
+                last_node.next = HashTableEntry(key=key, value=value)
+
+            # if input key matches an existing key
+            else:
+
+                # overwrite existing key value
+                current_node.value = value
+
+
 
             # last_node = None
 
@@ -158,120 +159,130 @@ class HashTable:
         # increment the number of pairs
         # key_value_pairs += 1
 
-def delete(self, key):
-        """
-        Remove the value stored with the given key.
+    def delete(self, key):
+            """
+            Remove the value stored with the given key.
 
-        Print a warning if the key is not found.
+            Print a warning if the key is not found.
 
-        Implement this.
-        """
-        # hash the key 
-        hash_1 = self.djb2(key)
+            Implement this.
+            """
+            # hash the key 
+            # hash_1 = self.djb2(key)
 
-        # mod hash with length of array
-        index = hash1 % self.capacity
+            # mod hash with length of array
+            index = self.hash_index(key)
 
-        # locate the index
-        current_node = self.array_buckets[index]
+            # locate the index
+            current_node = self.array_buckets[index]
 
-        # if there is nothing at that index
-        if current_node is None:
+            # if there is nothing at that index
+            if current_node is None:
 
-            # no key found
-            print(f"KeyError: '{key}' not found in hash table")
-
-        # if there is a node at that index
-        else:
-
-            # set the latest node to none (will make sense later in the function)
-            last_node = None
-
-            # while a key/value pair exists and that pair is not our input pair
-            while current_node and current_key != key:
-
-                # go to the next key
-                last_node = current_node
-                current_node = current_node.next
-
-            if current_node.key != key:
-  
                 # no key found
                 print(f"KeyError: '{key}' not found in hash table")
 
-            # if it is the right key
-            elif current_node.key == key:
+            # if there is a node at that index
+            else:
 
-                # if there is a previous node 
-                if last_node:
-                    
-                    # set the current node's 'next' equal to our last node's 'next'
-                    last_node.next = current_node.next
+                # set the latest node to none (will make sense later in the function)
+                last_node = None
 
-                # if there isn't a previous node (this is the first node)
-                else:
-
-                    # the next node is the first node
-                    self.array_buckets[index] = current_node.next
-
-        # decrement the number of pairs
-        # key_value_pairs -= 1
-
-
-
-    def delete2(self, key):
-        """
-        Remove the value stored with the given key.
-
-        Print a warning if the key is not found.
-
-        Implement this.
-        """
-        # hash the key 
-        hash_1 = self.djb2(key)
-
-        # mod hash with length of array
-        index = hash1 % self.capacity
-
-        # locate the index
-        current_node = self.array_buckets[index]
-
-        # if there is nothing at that index
-        if current_node is None:
-
-            # no key found
-            print(f"KeyError: '{key}' not found in hash table")
-
-        # if there is a node at that index
-        else:
-
-            # set the latest node to none (will make sense later in the function)
-            last_node = None
-
-            # while there is a key/value pair
-            while current_node:
-
-                # if it is the right key
-                if current_node.key == key:
-
-                    # if there is a previous node 
-                    if last_node:
-                        
-                        # set the current node's 'next' equal to our last node's 'next'
-                        last_node.next = current_node.next
-
-                    # if there isn't a previous node (this is the first node)
-                    else:
-
-                        # the next node is the first node
-                        self.array_buckets[index] = current_node.next
-        
-                # if it doesn't have the right key
-                else:
+                # while a key/value pair exists and that pair is not our input pair
+                while current_node and current_node != key:
 
                     # go to the next key
                     last_node = current_node
                     current_node = current_node.next
+
+                # if while loop stopped because we were out of keys to loop through
+                if not current_node:
+
+                    # no key found
+                    print(f"KeyError: '{key}' not found in hash table")
+
+                # if loop stopped because we found our key
+                elif current_node.key == key:
+
+                    # return the key's value!
+                    return current_node.value
+                
+
+    
+            
+                # # if it is the right key
+                # elif current_node.key == key:
+
+                #     # if there is a previous node 
+                #     if last_node:
+                        
+                #         # set the current node's 'next' equal to our last node's 'next'
+                #         last_node.next = current_node.next
+
+                #     # if there isn't a previous node (this is the first node)
+                #     else:
+
+                #         # the next node is the first node
+                #         self.array_buckets[index] = current_node.next
+
+            # decrement the number of pairs
+            # key_value_pairs -= 1
+
+
+
+    # def delete2(self, key):
+    #     """
+    #     Remove the value stored with the given key.
+
+    #     Print a warning if the key is not found.
+
+    #     Implement this.
+    #     """
+    #     # hash the key 
+    #     hash_1 = self.djb2(key)
+
+    #     # mod hash with length of array
+    #     index = hash1 % self.capacity
+
+    #     # locate the index
+    #     current_node = self.array_buckets[index]
+
+    #     # if there is nothing at that index
+    #     if current_node is None:
+
+    #         # no key found
+    #         print(f"KeyError: '{key}' not found in hash table")
+
+    #     # if there is a node at that index
+    #     else:
+
+    #         # set the latest node to none (will make sense later in the function)
+    #         last_node = None
+
+    #         # while there is a key/value pair
+    #         while current_node:
+
+    #             # if it is the right key
+    #             if current_node.key == key:
+
+    #                 # if there is a previous node 
+    #                 if last_node:
+                        
+    #                     # set the current node's 'next' equal to our last node's 'next'
+    #                     last_node.next = current_node.next
+
+    #                 # if there isn't a previous node (this is the first node)
+    #                 else:
+
+    #                     # the next node is the first node
+    #                     self.array_buckets[index] = current_node.next
+        
+    #             # if it doesn't have the right key
+    #             else:
+
+    #                 # go to the next key
+    #                 last_node = current_node
+    #                 current_node = current_node.next
 
             # once there is no current node
             # if last_node.key == key:
@@ -341,22 +352,43 @@ def delete(self, key):
 
 if __name__ == "__main__":
     ht = HashTable(8)
-    print(ht.djb2("line_1"))
-    print(ht.hash_index('line_1'))
-    ht.put("line_1", "'Twas brillig, and the slithy toves")
-    ht.put("line_2", "Did gyre and gimble in the wabe:")
-    ht.put("line_3", "All mimsy were the borogoves,")
-    ht.put("line_4", "And the mome raths outgrabe.")
-    ht.put("line_5", '"Beware the Jabberwock, my son!')
-    ht.put("line_6", "The jaws that bite, the claws that catch!")
-    ht.put("line_7", "Beware the Jubjub bird, and shun")
-    ht.put("line_8", 'The frumious Bandersnatch!"')
-    ht.put("line_9", "He took his vorpal sword in hand;")
-    ht.put("line_10", "Long time the manxome foe he sought--")
-    ht.put("line_11", "So rested he by the Tumtum tree")
-    ht.put("line_12", "And stood awhile in thought.")
 
-print(ht.get("line_1"))
+    ht.put("key-0", "val-0")
+    ht.put("key-1", "val-1")
+    ht.put("key-2", "val-2")
+    ht.put("key-3", "val-3")
+    ht.put("key-4", "val-4")
+    ht.put("key-5", "val-5")
+    ht.put("key-6", "val-6")
+    ht.put("key-7", "val-7")
+    ht.put("key-8", "val-8")
+    ht.put("key-9", "val-9")
+    ht.delete("key-7")
+    ht.delete("key-6")
+    ht.delete("key-5")
+    ht.delete("key-4")
+    ht.delete("key-3")
+    ht.delete("key-2")
+    ht.delete("key-1")
+    ht.delete("key-0")
+    return_value = ht.get("key-0")
+    print(return_value)
+    # print(ht.djb2("line_1"))
+    # print(ht.hash_index('line_1'))
+    # ht.put("line_1", "'Twas brillig, and the slithy toves")
+    # ht.put("line_2", "Did gyre and gimble in the wabe:")
+    # ht.put("line_3", "All mimsy were the borogoves,")
+    # ht.put("line_4", "And the mome raths outgrabe.")
+    # ht.put("line_5", '"Beware the Jabberwock, my son!')
+    # ht.put("line_6", "The jaws that bite, the claws that catch!")
+    # ht.put("line_7", "Beware the Jubjub bird, and shun")
+    # ht.put("line_8", 'The frumious Bandersnatch!"')
+    # ht.put("line_9", "He took his vorpal sword in hand;")
+    # ht.put("line_10", "Long time the manxome foe he sought--")
+    # ht.put("line_11", "So rested he by the Tumtum tree")
+    # ht.put("line_12", "And stood awhile in thought.")
+    # print("Get", ht.get("line_1"))
+    # print("Delete", ht.delete("line_5"))
     # print("")
 
     # # Test storing beyond capacity

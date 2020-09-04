@@ -77,11 +77,12 @@ class HashTable:
         Store the value with the given key.
         Hash collisions should be handled with Linked List Chaining.
         """
-        # check load_size
-        # if it's > 0.8, resize(2*capacity)
 
         # increment # of pairs in table
         HashTable.key_value_pair_counts += 1
+
+        # check load_size
+        # if it's > 0.8, resize(2*capacity)
 
         # mod hash with length of array
         index = self.hash_index(key)
@@ -226,27 +227,30 @@ class HashTable:
         Implement this.
         """
 
-        # unfinished
+        # store the existing array
+        temp = self.array_buckets
 
         # set new capacity
         self.capacity = new_capacity
 
-        # store the existing array
-        temp = self.array_buckets
-
-        # start a new array 
+        # create an empty array
         self.array_buckets = [None for i in range(self.capacity)]
 
-        # iterate through list
-        for item in temp:
-            self.put(item.key, item.value)
+        # reset key value pair counts to 0
+        # this will run into errors if min of 0.2 set
+        HashTable.key_value_pair_counts = 0
 
+        # for each index in our temp array
+        for node in temp: 
 
-            #Each item has to be rerun through the hashing function because the hashing 
-            #function takes into account the size of the hash table when determining the index 
-            #that it returns."
+            # while a node exists at that index
+            while node:
+            
+                # insert the new node
+                self.put(node.key, node.value)
 
-
+                # go to the next node
+                node = node.next
 
 
 if __name__ == "__main__":
@@ -266,22 +270,24 @@ if __name__ == "__main__":
     ht.put("line_12", "And stood awhile in thought.")
 
 
-    # print("")
+    print("")
 
-    # # Test storing beyond capacity
-    # for i in range(1, 13):
-    #     print(ht.get(f"line_{i}"))
+    # Test storing beyond capacity (only for module 1 testing)
+    for i in range(1, 13):
+        print(ht.get(f"line_{i}"))
+    print(ht.get(f"line_13"))
 
-    # # Test resizing
-    # old_capacity = ht.get_num_slots()
-    # print(ht.resize(ht.capacity * 2))
-    # new_capacity = ht.get_num_slots()
+    # Test resizing
+    old_capacity = ht.get_num_slots()
+    ht.resize(ht.capacity * 2)
+  
+    new_capacity = ht.get_num_slots()
 
 
-    # print(f"\nResized from {old_capacity} to {new_capacity}.\n")
+    print(f"\nResized from {old_capacity} to {new_capacity}.\n")
 
-    # # Test if data intact after resizing
-    # for i in range(1, 13):
-    #     print(ht.get(f"line_{i}"))
+    # Test if data intact after resizing
+    for i in range(1, 13):
+        print(ht.get(f"line_{i}"))
 
     # print("")

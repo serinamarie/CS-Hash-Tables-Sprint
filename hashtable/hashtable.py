@@ -19,8 +19,6 @@ class HashTable:
     """
     A hash table that with `capacity` buckets
     that accepts string keys
-
-    Implement this.
     """
 
     key_value_pair_counts = 0
@@ -37,8 +35,6 @@ class HashTable:
         but the number of slots in the main list.)
 
         One of the tests relies on this.
-
-        Implement this.
         """
         # return the length of the array
         return len(self.array_buckets)
@@ -47,8 +43,6 @@ class HashTable:
     def get_load_factor(self):
         """
         Return the load factor for this hash table.
-
-        Implement this.
         """
         # return load factor
         return HashTable.key_value_pair_counts / self.get_num_slots()
@@ -57,8 +51,6 @@ class HashTable:
     def djb2(self, key):
         """
         DJB2 hash, 32-bit
-
-        Implement this, and/or FNV-1.
         """
 
         hash = 5381
@@ -84,8 +76,10 @@ class HashTable:
         """
         Store the value with the given key.
         Hash collisions should be handled with Linked List Chaining.
-        Implement this.
         """
+        # check load_size
+        # if it's > 0.8, resize(2*capacity)
+
         # increment # of pairs in table
         HashTable.key_value_pair_counts += 1
 
@@ -133,6 +127,9 @@ class HashTable:
         Print a warning if the key is not found.
         Implement this.
         """
+
+        # check load_size
+        # if it's less than 0.2, resize(0.5*capacity)
  
         # mod hash with length of array
         index = self.hash_index(key)
@@ -228,6 +225,8 @@ class HashTable:
 
         Implement this.
         """
+
+        # unfinished
 
         # set new capacity
         self.capacity = new_capacity

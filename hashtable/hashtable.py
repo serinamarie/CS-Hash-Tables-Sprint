@@ -14,7 +14,6 @@ class HashTableEntry:
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
 
-
 class HashTable:
     """
     A hash table that with `capacity` buckets
@@ -78,11 +77,14 @@ class HashTable:
         Hash collisions should be handled with Linked List Chaining.
         """
 
+        # check if load factor would become > 0.7 if we add a new entry
+        if (HashTable.key_value_pair_counts + 1) / self.get_num_slots() > 0.7:
+
+            # if it would, double size and rehash
+            self.resize(2*self.capacity)
+
         # increment # of pairs in table
         HashTable.key_value_pair_counts += 1
-
-        # check load_size
-        # if it's > 0.8, resize(2*capacity)
 
         # mod hash with length of array
         index = self.hash_index(key)
@@ -129,8 +131,16 @@ class HashTable:
         Implement this.
         """
 
-        # check load_size
-        # if it's less than 0.2, resize(0.5*capacity)
+        # STRETCH
+
+        # if the load factor would become < 0.2 if we delete an entry
+        if (HashTable.key_value_pair_counts - 1) / self.get_num_slots() < 0.2:
+
+            # if our capacity isn't already at minimum
+            if not self.capacity == MIN_CAPACITY:
+
+                # resize to half the capacity
+                self.resize(int(self.capacity/2))
  
         # mod hash with length of array
         index = self.hash_index(key)
@@ -174,7 +184,6 @@ class HashTable:
 
             # no key found
             print(f"IndexError: There are no keys at that index")
-
 
 
     def get(self, key):
@@ -226,18 +235,16 @@ class HashTable:
 
         Implement this.
         """
-
         # store the existing array
         temp = self.array_buckets
 
         # set new capacity
         self.capacity = new_capacity
 
-        # create an empty array
+        # reset array to empty
         self.array_buckets = [None for i in range(self.capacity)]
 
         # reset key value pair counts to 0
-        # this will run into errors if min of 0.2 set
         HashTable.key_value_pair_counts = 0
 
         # for each index in our temp array
@@ -279,15 +286,32 @@ if __name__ == "__main__":
 
     # Test resizing
     old_capacity = ht.get_num_slots()
-    ht.resize(ht.capacity * 2)
+    # ht.resize(ht.capacity * 2)
   
     new_capacity = ht.get_num_slots()
 
 
     print(f"\nResized from {old_capacity} to {new_capacity}.\n")
+    print("Load factor:", ht.get_load_factor())
 
     # Test if data intact after resizing
     for i in range(1, 13):
         print(ht.get(f"line_{i}"))
 
     # print("")
+
+    # ht.delete("line_1")
+    # ht.delete("line_2")
+    # ht.delete("line_3")
+    # ht.delete("line_4")
+    # ht.delete("line_5")
+    # ht.delete("line_6")
+    # ht.delete("line_7")
+    # ht.delete("line_8")
+    # ht.delete("line_9")
+    # ht.delete("line_10")
+    # ht.delete("line_11")
+    # ht.delete("line_12")
+    print("Load factor:", ht.get_load_factor())
+    print('capacity:', ht.capacity)
+    print('kvpc:', ht.key_value_pair_counts)

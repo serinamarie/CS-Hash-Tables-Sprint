@@ -1,3 +1,6 @@
+
+# Edit class to account for re-sizing if insertion or deletion causes
+# load size to be too large or small
 class HashTableEntry:
     """
     Linked List hash table key/value pair
@@ -23,7 +26,7 @@ class HashTable:
     key_value_pair_counts = 0
 
     def __init__(self, capacity):
-        self.capacity = capacity
+        self.capacity = MIN_CAPACITY
         self.array_buckets = [None for i in range(capacity)]
 
 
@@ -64,10 +67,10 @@ class HashTable:
 
         for byte in byte_array:
 
-            hash = (hash * 33) + byte
+            hash = ((hash << 5) + hash) + byte
 
         return hash
-        
+
 
     def hash_index(self, key):
         """
@@ -180,7 +183,6 @@ class HashTable:
         """
         Retrieve the value stored with the given key.
         Returns None if the key is not found.
-        Implement this.
         """
         # mod hash with length of array
         index = self.hash_index(key)
@@ -227,11 +229,24 @@ class HashTable:
         Implement this.
         """
 
-        if self.get_load_factor() >= 0.7:
-            self.capacity = new_capacity
-            self.array_buckets = [None for i in range(new_capacity)]
+        # set new capacity
+        self.capacity = new_capacity
 
-            # rehash key value pairs
+        # store the existing array
+        temp = self.array_buckets
+
+        # start a new array 
+        self.array_buckets = [None for i in range(self.capacity)]
+
+        # iterate through list
+        for item in temp:
+            self.put(item.key, item.value)
+
+
+            #Each item has to be rerun through the hashing function because the hashing 
+            #function takes into account the size of the hash table when determining the index 
+            #that it returns."
+
 
 
 
@@ -251,21 +266,23 @@ if __name__ == "__main__":
     ht.put("line_11", "So rested he by the Tumtum tree")
     ht.put("line_12", "And stood awhile in thought.")
 
-    print("")
 
-    # Test storing beyond capacity
-    for i in range(1, 13):
-        print(ht.get(f"line_{i}"))
+    # print("")
 
-    # Test resizing
-    old_capacity = ht.get_num_slots()
-    ht.resize(ht.capacity * 2)
-    new_capacity = ht.get_num_slots()
+    # # Test storing beyond capacity
+    # for i in range(1, 13):
+    #     print(ht.get(f"line_{i}"))
 
-    print(f"\nResized from {old_capacity} to {new_capacity}.\n")
+    # # Test resizing
+    # old_capacity = ht.get_num_slots()
+    # print(ht.resize(ht.capacity * 2))
+    # new_capacity = ht.get_num_slots()
 
-    # Test if data intact after resizing
-    for i in range(1, 13):
-        print(ht.get(f"line_{i}"))
 
-    print("")
+    # print(f"\nResized from {old_capacity} to {new_capacity}.\n")
+
+    # # Test if data intact after resizing
+    # for i in range(1, 13):
+    #     print(ht.get(f"line_{i}"))
+
+    # print("")

@@ -1,6 +1,3 @@
-
-# Edit class to account for re-sizing if insertion or deletion causes
-# load size to be too large or small
 class HashTableEntry:
     """
     Linked List hash table key/value pair

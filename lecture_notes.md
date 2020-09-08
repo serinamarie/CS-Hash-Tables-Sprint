@@ -18,40 +18,37 @@ Time complexity?
 O(1)
 
 ```python
-    #Collision
-    key1='dad'
-    key2='add'
+#Collision
+key1='dad'
+key2='add'
 
-    #Put 1
-    hash1=UTF8_hash(key1)
-    idx1 = has1 % len(my_arr2)
-    my_arr2[idx] = 'howdy'
+#Put 1
+hash1=UTF8_hash(key1)
+idx1 = has1 % len(my_arr2)
+my_arr2[idx] = 'howdy'
 
-    #Put 2
-    hash2=UTF8_hash(key2)
-    idx2 = hash2 % len(my_arr2)
-    my_arr2[idx2] = 'whats up yall'
+#Put 2
+hash2=UTF8_hash(key2)
+idx2 = hash2 % len(my_arr2)
+my_arr2[idx2] = 'whats up yall'
 
-    get_hash = UTF8_Hash(key1)
-    idx3 = get_hash % len(my_arr2)
-    print(my_arr2[idx3])
+get_hash = UTF8_Hash(key1)
+idx3 = get_hash % len(my_arr2)
+print(my_arr2[idx3])
 ```
 
 ## Collision Resolution
 
 Open addressing 
 
-    - Linear probing: if index is unavailable, go to next available empty index
+- Linear probing: if index is unavailable, go to next available empty index
+    - Cons w/ linear probing: primary clustering: keys might bunch together
 
-        - Cons w/ linear probing:
+- Plus 3 rehash
 
-        - primary clustering: keys might bunch together
+- Quadratic probing (failed attempts)^2 (if failed attempt, square to get even further away)
 
-    - Plus 3 rehash
-
-    - Quadratic probing (failed attempts)^2 (if failed attempt, square to get even further away)
-
-    - Double hashing 
+- Double hashing 
 
 - Pros of open addressing:
 
@@ -87,7 +84,7 @@ def djb2(s):
 
 
 hash = (hash*33) + byte
-oooor xor
+
 hash = hash(byte-1) * 33^byte
 
 hash(i) = hash(i - 1) * 33 ^ str[i]
@@ -132,18 +129,17 @@ compared to alternatives (esp when slower methods would cause a problem)
             - progress toward base case
             - return fib of n-1 and fib of n-2, summed
         - Execute
-
-    ```python
-    def fibonacci(n):
-        # base case
-        ### 0 and/or 1
-        if n <= 1:
-            return n
-
-        return fibonacci(n-1) + fibonacci(n-2)
-        ```
-
             - if you discover an edge case or something, throw it in your plan
+
+```python
+def fibonacci(n):
+    # base case
+    ### 0 and/or 1
+    if n <= 1:
+        return n
+
+    return fibonacci(n-1) + fibonacci(n-2)
+```
             
         - Review
 

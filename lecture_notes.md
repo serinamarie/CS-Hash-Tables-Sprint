@@ -91,4 +91,84 @@ hash = hash(byte-1) * 33^byte
 
 hash(i) = hash(i - 1) * 33 ^ str[i]
 
+## Lecture 3
+1. which is faster, adding to head, or add to tail? it doesn't matter(?) 
+You always have to iterate through all keys.
 
+'''amortize the cost of resizing over all the puts
+resizing is rare, because we double in size
+basically it's O(1)'''
+
+Probably best to use the built-in dict type
+
+### Pattern matching 
+Module 3 and 4 are to provide practice in spotting problems that might require a hash table
+
+- Consider your data structure: array, tree, hash table?
+
+- Time complexity is easy to think about with arrays v hash tables
+
+- Use hash tables when you reaquiring information would be too slow. And if you have something you need to look up quickly
+compared to alternatives (esp when slower methods would cause a problem)
+    - linear search of an array
+    - if you search for something in an array, and store the info in a hashtable so when you return to look up that info you could look
+    at the hashtable first 
+
+- Dynamic programming
+
+- Code up a function
+    - make a function that will returnt he n-th element of the Fibonacci sequence
+    - apply UPER
+        - Understand
+            - Feynman technique
+                - ELI5 
+        - Plan
+            - pseudocode that you can execute
+            - Use a recursive solution (find n-1 and n-2 things)
+            - base case (the two we started off with (0 and 1))
+            - function calls itself
+            - progress toward base case
+            - return fib of n-1 and fib of n-2, summed
+        - Execute
+
+def fibonacci(n):
+    # base case
+    ### 0 and/or 1
+    if n <= 1:
+        return n
+
+    return fibonacci(n-1) + fibonacci(n-2)
+
+            - if you discover an edge case or something, throw it in your plan
+        - Review
+
+# what is the time complexity of this function?
+# it is not linear
+
+- Improve time complexity using memoization
+    - check if we have a result before doing the memoization
+
+memo = {}
+def memoized_fibonacci(n):
+
+    # base case (0 and/or 1)
+    if n <= 1:
+        return n
+
+    # check if we have a result before doing the computation
+    if n in memo:
+        return memo[n]
+    
+    # store results as we go
+    else: 
+        memo[n] = fibonacci(n-1) + fibonacci(n-2)
+    
+    # progress toward base case
+    # return fib of n-1 and fib of n-2, summed 
+    return memo[n]
+
+memoized_fibonacci(3) # should be 2
+memoized_fibonacci(2) + memoized_fibonacci(1)
+memoized_fibonacci(1) + memoized_fibonacci(0)
+
+print(memoized_fibonacci(12))

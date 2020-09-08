@@ -17,7 +17,7 @@ Time complexity?
 - Constant time in length of array <------ This is important part
 O(1)
 
-```
+```python
     #Collision
     key1='dad'
     key2='add'
@@ -38,7 +38,7 @@ O(1)
 ```
 
 ## Collision Resolution
-```
+
 Open addressing 
 
     - Linear probing: if index is unavailable, go to next available empty index
@@ -56,8 +56,8 @@ Open addressing
 - Pros of open addressing:
 
     - If load factor is low, better to use open addressing
-```
-```
+
+
 Closed addressing
 
 Chaining (also called closed addressing)
@@ -71,13 +71,14 @@ Chaining (also called closed addressing)
     - Quicker lookup
 
     - If load factor is high this might be better
-```
+
 
 1. set a constant hash = 5381
 2. for letter in string
 3. hash = g* hash + s.char(letter)
 2. return hash
 
+```python
 def djb2(s):
     hash = 5381
     byte_array = s.encode('utf-8')
@@ -90,14 +91,15 @@ oooor xor
 hash = hash(byte-1) * 33^byte
 
 hash(i) = hash(i - 1) * 33 ^ str[i]
+```
 
 ## Lecture 3
 1. which is faster, adding to head, or add to tail? it doesn't matter(?) 
 You always have to iterate through all keys.
 
-'''amortize the cost of resizing over all the puts
+amortize the cost of resizing over all the puts
 resizing is rare, because we double in size
-basically it's O(1)'''
+basically it's O(1)
 
 Probably best to use the built-in dict type
 
@@ -131,6 +133,7 @@ compared to alternatives (esp when slower methods would cause a problem)
             - return fib of n-1 and fib of n-2, summed
         - Execute
 
+    ```python
     def fibonacci(n):
         # base case
         ### 0 and/or 1
@@ -138,8 +141,10 @@ compared to alternatives (esp when slower methods would cause a problem)
             return n
 
         return fibonacci(n-1) + fibonacci(n-2)
+        ```
 
             - if you discover an edge case or something, throw it in your plan
+            
         - Review
 
 - What is the time complexity of this function? Exponential O(c^n)
@@ -147,6 +152,7 @@ compared to alternatives (esp when slower methods would cause a problem)
 - Improve time complexity using memoization
     - check if we have a result before doing the memoization
 
+    ```python
     memo = {}
     def memoized_fibonacci(n):
 
@@ -171,3 +177,4 @@ compared to alternatives (esp when slower methods would cause a problem)
     memoized_fibonacci(1) + memoized_fibonacci(0)
 
     print(memoized_fibonacci(12))
+    ```

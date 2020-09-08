@@ -131,44 +131,43 @@ compared to alternatives (esp when slower methods would cause a problem)
             - return fib of n-1 and fib of n-2, summed
         - Execute
 
-def fibonacci(n):
-    # base case
-    ### 0 and/or 1
-    if n <= 1:
-        return n
+    def fibonacci(n):
+        # base case
+        ### 0 and/or 1
+        if n <= 1:
+            return n
 
-    return fibonacci(n-1) + fibonacci(n-2)
+        return fibonacci(n-1) + fibonacci(n-2)
 
             - if you discover an edge case or something, throw it in your plan
         - Review
 
-# what is the time complexity of this function?
-# it is not linear
+- What is the time complexity of this function? Exponential O(c^n)
 
 - Improve time complexity using memoization
     - check if we have a result before doing the memoization
 
-memo = {}
-def memoized_fibonacci(n):
+    memo = {}
+    def memoized_fibonacci(n):
 
-    # base case (0 and/or 1)
-    if n <= 1:
-        return n
+        # base case (0 and/or 1)
+        if n <= 1:
+            return n
 
-    # check if we have a result before doing the computation
-    if n in memo:
+        # check if we have a result before doing the computation
+        if n in memo:
+            return memo[n]
+    
+        # store results as we go
+        else: 
+            memo[n] = fibonacci(n-1) + fibonacci(n-2)
+    
+        # progress toward base case
+        # return fib of n-1 and fib of n-2, summed 
         return memo[n]
-    
-    # store results as we go
-    else: 
-        memo[n] = fibonacci(n-1) + fibonacci(n-2)
-    
-    # progress toward base case
-    # return fib of n-1 and fib of n-2, summed 
-    return memo[n]
 
-memoized_fibonacci(3) # should be 2
-memoized_fibonacci(2) + memoized_fibonacci(1)
-memoized_fibonacci(1) + memoized_fibonacci(0)
+    memoized_fibonacci(3) # should be 2
+    memoized_fibonacci(2) + memoized_fibonacci(1)
+    memoized_fibonacci(1) + memoized_fibonacci(0)
 
-print(memoized_fibonacci(12))
+    print(memoized_fibonacci(12))

@@ -130,6 +130,7 @@ compared to alternatives (esp when slower methods would cause a problem)
             - return fib of n-1 and fib of n-2, summed
         - Execute
             - if you discover an edge case or something, throw it in your plan
+        - Review
 
 ```python
 def fibonacci(n):
@@ -140,8 +141,6 @@ def fibonacci(n):
 
     return fibonacci(n-1) + fibonacci(n-2)
 ```
-            
-        - Review
 
 - What is the time complexity of this function? Exponential O(c^n)
 

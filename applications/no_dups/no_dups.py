@@ -6,7 +6,7 @@ def no_dups(s):
     # create an empty dict
     word_dict = {}
 
-
+    # create an empty list for unique words
     unique_words = []
 
     # for each word in list

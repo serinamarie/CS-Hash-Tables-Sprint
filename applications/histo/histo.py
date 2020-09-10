@@ -36,7 +36,13 @@ def histo(filename):
         if word not in word_dict:
 
             # add new key/value pair
-            word_dict[word] = words.count(word)
+            word_dict[word] = 1
+        
+        # if word in dict
+        else:
+
+            # increase the counter
+            word_dict[word] += 1
 
     # sort the list of tuples by the second key first (counts, descending)
     # then by the first key (alphabetical order)

@@ -27,19 +27,27 @@ def word_count(s):
     # for each word in our list of words 
     for word in words:
 
-        # if not already in dict
-        if word not in word_dict:
+        # if the word is already in the dict
+        if word in word_dict:
 
-            # add new key/value pair
-            word_dict[word] = words.count(word)
+            # increase the word count by 1
+            word_dict[word] += 1
+
+        # if the word isn't in dict
+        else:
+
+            # add it the dict
+            word_dict[word] = 1
 
     return word_dict
 
 
 if __name__ == "__main__":
-    print(word_count(""))
-    print(word_count("Hello"))
-    print(word_count('Hello, my cat. And my cat doesn\'t say "hello" back.'))
-    print(word_count('This is a test of the emergency broadcast network. This is only a test.'))
+    # print(word_count(""))
+    print(word_count("Hello    hello"))
+    # print(word_count('Hello my cat. And my cat doesn\'t say "hello" back.'))
+    # print(word_count('This is a test of the emergency broadcast network. This is only a test.'))
+
+    print(word_count('":;,.-+=/\\|[]{}()*^&'))
     
 

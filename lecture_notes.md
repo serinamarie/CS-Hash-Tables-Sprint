@@ -173,3 +173,18 @@ def fibonacci(n):
 
     print(memoized_fibonacci(12))
     ```
+
+## Lecture 4
+- pre-allocating
+- resize once in a while
+- precalculate results and cache in dict
+
+You cannot sort a dictionary
+
+You cannot sort a hash table
+Hash function puts keys at random incides
+
+Do hash tables preserve order?
+- No, items are put in at random indices
+
+Dict

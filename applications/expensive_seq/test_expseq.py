@@ -16,5 +16,5 @@ class TestHashTable(unittest.TestCase):
         self.assertTrue(x == 348089347602676380885589070822523585642423790379026639337628)
 
 
-# if __name__ == '__main__':
-#     unittest.main()
+if __name__ == '__main__':
+    unittest.main()

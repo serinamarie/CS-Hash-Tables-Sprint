@@ -49,3 +49,6 @@ shows the result from the what `f(x)` returns for each of those.
 
 No test script for this one. Keep in mind your output might be in a
 different order than the above.
+
+Notes:
+It appears 4 numbers are chosen with replacement. 
